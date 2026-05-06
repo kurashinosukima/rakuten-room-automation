@@ -4,14 +4,11 @@ from typing import Any
 
 SEARCH_API = "https://app.rakuten.co.jp/services/api/IchibaItem/Search/20220601"
 
-# 収納カテゴリのジャンルID (楽天市場: インテリア・寝具・収納 > 収納家具)
-STORAGE_GENRE_ID = "215831"
-
 
 def fetch_storage_products(hits: int = 10) -> list[dict[str, Any]]:
     params = {
         "applicationId": os.environ["RAKUTEN_APP_ID"],
-        "genreId": STORAGE_GENRE_ID,
+        "keyword": "収納",
         "hits": hits,
         "sort": "-reviewCount",
         "imageFlag": 1,
@@ -26,7 +23,7 @@ def fetch_storage_products(hits: int = 10) -> list[dict[str, Any]]:
         products.append({
             "name": item["itemName"],
             "price": item["itemPrice"],
-            "url": item.get("affiliateUrl") or item["itemUrl"],
+            "url": item["itemUrl"],
             "shop": item["shopName"],
             "review_count": item["reviewCount"],
             "review_average": item["reviewAverage"],
