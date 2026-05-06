@@ -7,7 +7,7 @@ def fetch_storage_products(hits=10):
     params = {
         "applicationId": os.environ["RAKUTEN_APP_ID"],
         "accessKey": os.environ["RAKUTEN_ACCESS_KEY"],
-        "keyword": "収納",
+        "keyword": "収納ボックス 賃貸",
         "hits": hits,
         "sort": "-reviewCount",
         "imageFlag": 1,

@@ -24,6 +24,13 @@ def analyze_products(products: list[dict[str, Any]]) -> str:
         for i, p in enumerate(products)
     ])
 
+    product_links = "\n\n".join([
+        f"【商品{i+1}】{p['name'][:30]}\n"
+        f"💰 ¥{p['price']:,} | ⭐ {p['review_average']} ({p['review_count']:,}件)\n"
+        f"🔗 {p['url']}"
+        for i, p in enumerate(products[:3])
+    ])
+
     prompt = f"""以下の収納商品の中から特におすすめの3商品を選び、
 楽天ROOMに投稿する紹介文を生成してください。
 
@@ -31,12 +38,17 @@ def analyze_products(products: list[dict[str, Any]]) -> str:
 - 各商品に見出し（商品名）を付ける
 - 商品の魅力・使い道を2〜3文で説明
 - 価格とレビュー情報を自然に盛り込む
-- 最後に楽天ROOMのアフィリエイトURLを記載
 - 全体を1つのLINEメッセージとして読みやすくまとめる
 - 冒頭に今日のおすすめ収納アイテムとして一言添える
+- 本文の最後に以下の「📎 商品リンク一覧」セクションをそのまま追加すること（変更・省略禁止）
 
 商品一覧:
 {product_list}
+
+本文末尾に必ず追加するセクション:
+📎 商品リンク一覧
+
+{product_links}
 """
 
     response = model.generate_content(prompt)

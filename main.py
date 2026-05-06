@@ -10,7 +10,7 @@ def main() -> None:
     load_dotenv()
 
     print("楽天市場から収納商品を取得中...")
-    products = fetch_storage_products(hits=5)
+    products = fetch_storage_products(hits=10)
     if not products:
         print("商品が取得できませんでした", file=sys.stderr)
         sys.exit(1)
