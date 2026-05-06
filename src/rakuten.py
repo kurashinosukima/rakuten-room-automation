@@ -17,10 +17,6 @@ def fetch_storage_products(hits: int = 10) -> list[dict[str, Any]]:
         "imageFlag": 1,
         "formatVersion": 2,
     }
-    affiliate_id = os.environ.get("RAKUTEN_AFFILIATE_ID", "")
-    if affiliate_id:
-        params["affiliateId"] = affiliate_id
-
     resp = requests.get(SEARCH_API, params=params, timeout=15)
     resp.raise_for_status()
     data = resp.json()
