@@ -4,12 +4,9 @@ import requests
 def fetch_storage_products(hits=10):
     url = "https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20220601"
 
-    headers = {
-        "Authorization": f"Bearer {os.environ['RAKUTEN_ACCESS_KEY']}"
-    }
-
     params = {
         "applicationId": os.environ["RAKUTEN_APP_ID"],
+        "accessKey": os.environ["RAKUTEN_ACCESS_KEY"],
         "keyword": "収納",
         "hits": hits,
         "sort": "-reviewCount",
@@ -17,7 +14,7 @@ def fetch_storage_products(hits=10):
         "formatVersion": 2
     }
 
-    resp = requests.get(url, headers=headers, params=params)
+    resp = requests.get(url, params=params)
     resp.raise_for_status()
     data = resp.json()
 
