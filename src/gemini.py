@@ -18,9 +18,8 @@ def analyze_products(products: list[dict[str, Any]]) -> str:
         f"【商品{i+1}】\n"
         f"  名前: {p['name']}\n"
         f"  価格: ¥{p['price']:,}\n"
-        f"  ショップ: {p['shop']}\n"
+        f"  ショップ: {p['shop_name']}\n"
         f"  レビュー: {p['review_average']}点 ({p['review_count']}件)\n"
-        f"  キャッチコピー: {p['catch_copy']}\n"
         f"  URL: {p['url']}"
         for i, p in enumerate(products)
     ])
