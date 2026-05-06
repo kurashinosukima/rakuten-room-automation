@@ -2,10 +2,13 @@ import os
 import requests
 from typing import Any
 
-SEARCH_API = "https://app.rakuten.co.jp/services/api/IchibaItem/Search/20220601"
+SEARCH_API = "https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20220601"
 
 
 def fetch_storage_products(hits: int = 10) -> list[dict[str, Any]]:
+    headers = {
+        "Authorization": f"Bearer {os.environ['RAKUTEN_ACCESS_KEY']}",
+    }
     params = {
         "applicationId": os.environ["RAKUTEN_APP_ID"],
         "keyword": "収納",
@@ -14,7 +17,7 @@ def fetch_storage_products(hits: int = 10) -> list[dict[str, Any]]:
         "imageFlag": 1,
         "formatVersion": 2,
     }
-    resp = requests.get(SEARCH_API, params=params, timeout=15)
+    resp = requests.get(SEARCH_API, headers=headers, params=params, timeout=15)
     resp.raise_for_status()
     data = resp.json()
 
