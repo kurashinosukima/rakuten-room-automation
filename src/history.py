@@ -2,6 +2,7 @@ import json
 import os
 from datetime import datetime, timezone
 from typing import Any
+from urllib.parse import urlsplit, urlunsplit
 
 HISTORY_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "posted_items.json")
 
@@ -30,6 +31,11 @@ def save_posted_items(item_codes: list[str]) -> None:
         )
 
 
+def _strip_query(url: str) -> str:
+    parts = urlsplit(url)
+    return urlunsplit((parts.scheme, parts.netloc, parts.path, "", ""))
+
+
 def filter_unposted_products(products: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    posted = load_posted_items()
-    return [p for p in products if p.get("item_code", "") not in posted]
+    posted = {_strip_query(u) for u in load_posted_items()}
+    return [p for p in products if _strip_query(p.get("item_code", "")) not in posted]

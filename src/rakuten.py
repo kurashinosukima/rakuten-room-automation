@@ -21,7 +21,7 @@ def fetch_storage_products(hits=10):
     products = []
     for item in data.get("Items", []):
         products.append({
-            "item_code": item.get("itemCode", ""),
+            "item_code": item.get("itemUrl", ""),
             "name": item.get("itemName", ""),
             "price": item.get("itemPrice", 0),
             "url": item.get("itemUrl", ""),
